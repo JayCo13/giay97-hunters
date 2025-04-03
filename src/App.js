@@ -1,6 +1,3 @@
-// Add this import at the top of your App.js
-import GameOverTest from './components/GameOverTest';
-
 import React, { useState, useEffect, useRef } from 'react';
 import './App.css';
 import GameContainer from './components/GameContainer';
