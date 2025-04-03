@@ -20,14 +20,15 @@ function App() {
     timeRemaining, setTimeRemaining,
     showGameOver, setShowGameOver,
     lastShotTime, setLastShotTime,
-    lastBirdSoundTime, setLastBirdSoundTime
+    // Remove or comment out unused variables
+    // lastBirdSoundTime, setLastBirdSoundTime
   } = useGameState();
   
   const gameContainerRef = useRef(null);
   // Always show clouds, even before game starts
   const clouds = useCloudEffect(true);
   
-  // Game timer
+  // Game timer - add missing dependencies
   useEffect(() => {
     if (!gameStarted || showGameOver) return;
     
@@ -52,9 +53,9 @@ function App() {
     }, 1000);
     
     return () => clearInterval(timer);
-  }, [gameStarted, showGameOver]);
+  }, [gameStarted, showGameOver, setBirds, setShowGameOver, setTimeRemaining]);
   
-  // Hide instructions after 10 seconds
+  // Hide instructions after 10 seconds - add missing dependency
   useEffect(() => {
     if (gameStarted && showInstructions) {
       const timer = setTimeout(() => {
@@ -63,7 +64,7 @@ function App() {
       
       return () => clearTimeout(timer);
     }
-  }, [gameStarted, showInstructions]);
+  }, [gameStarted, showInstructions, setShowInstructions]);
   
   // Initialize audio on game start
   useEffect(() => {

@@ -84,7 +84,8 @@ export const playSound = (soundKey, durationMs) => {
     // If duration is specified, fade out and stop after that duration
     if (durationMs) {
       // Schedule a fade out starting slightly before the end time
-      const fadeStart = audioContext.current.currentTime + (durationMs / 1000) - 0.1;
+      // Remove or comment out the unused variable
+      // const fadeStart = audioContext.current.currentTime + (durationMs / 1000) - 0.1;
       const fadeEnd = audioContext.current.currentTime + (durationMs / 1000);
       
       // Set initial volume
