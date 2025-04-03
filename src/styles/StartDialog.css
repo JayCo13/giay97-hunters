@@ -43,7 +43,7 @@
   margin-bottom: 20px;
   font-size: clamp(1.8rem, 5vw, 3rem);
   text-shadow: 0 0 10px rgba(0, 0, 0, 0.5);
-  font-family: 'Comic Sans MS', cursive, sans-serif;
+  font-family:sans-serif;
   display: flex;
   align-items: center;
   justify-content: center;

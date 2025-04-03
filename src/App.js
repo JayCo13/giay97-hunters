@@ -24,9 +24,20 @@ function App() {
     // lastBirdSoundTime, setLastBirdSoundTime
   } = useGameState();
   
+  // Add state to track if we're on a mobile device
+  const [isMobile, setIsMobile] = useState(window.innerWidth < 768);
   const gameContainerRef = useRef(null);
-  // Always show clouds, even before game starts
   const clouds = useCloudEffect(true);
+  
+  // Add a resize listener to detect mobile devices
+  useEffect(() => {
+    const handleResize = () => {
+      setIsMobile(window.innerWidth < 768);
+    };
+    
+    window.addEventListener('resize', handleResize);
+    return () => window.removeEventListener('resize', handleResize);
+  }, []);
   
   // Game timer - add missing dependencies
   useEffect(() => {
@@ -118,6 +129,24 @@ function App() {
     }
   }, [gameStarted]);
 
+  // Modify bird positions to avoid the control area on mobile
+  useEffect(() => {
+    if (isMobile && gameStarted) {
+      setBirds(prevBirds => {
+        return prevBirds.map(bird => {
+          // If bird is in the bottom control area (bottom 20% of screen), move it up
+          if (bird.y > 80) {
+            return {
+              ...bird,
+              y: Math.min(bird.y, 75) // Keep birds in the top 75% of the screen
+            };
+          }
+          return bird;
+        });
+      });
+    }
+  }, [isMobile, gameStarted, setBirds]);
+
   return (
     <div 
       className="game-container"
@@ -148,7 +177,8 @@ function App() {
         setAimDuration={setAimDuration}
         lastShotTime={lastShotTime}
         setLastShotTime={setLastShotTime}
-        isPreview={!gameStarted} // New prop to indicate preview mode
+        isPreview={!gameStarted}
+        isMobile={isMobile} // Pass the mobile state to GameContainer
       />
       
       {!gameStarted && <StartDialog onStartGame={handleStartGame} />}
