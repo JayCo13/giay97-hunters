@@ -1,6 +1,16 @@
 import React from 'react';
 
-const Cloud = ({ cloud }) => {
+const Cloud = ({ cloud, isMobile }) => {
+  // Calculate if cloud is in the safe zone (avoid bottom area on mobile)
+  const isInSafeZone = isMobile ? 
+    cloud.y < window.innerHeight * 0.7 : // Keep clouds in top 70% on mobile
+    true; // No restrictions on desktop
+
+  // Don't render clouds that would appear in the control area on mobile
+  if (isMobile && !isInSafeZone) {
+    return null;
+  }
+
   return (
     <div
       className="cloud"

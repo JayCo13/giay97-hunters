@@ -1,7 +1,7 @@
 import React from 'react';
 import gunImage from '../assets/gun.png';
 
-const Gun = ({ isDragging, aimDuration, isReloading }) => {
+const Gun = ({ isDragging, aimDuration, isReloading, isMobile }) => {
   return (
     <div 
       className="gun-container"
@@ -10,7 +10,7 @@ const Gun = ({ isDragging, aimDuration, isReloading }) => {
         bottom: 0,
         left: 0,
         width: '100%',
-        height: 'clamp(120px, 30vh, 200px)',
+        height: isMobile ? 'clamp(100px, 25vh, 150px)' : 'clamp(120px, 30vh, 200px)', // Smaller on mobile
         zIndex: 10,
         pointerEvents: 'none',
         display: 'flex',
@@ -21,7 +21,7 @@ const Gun = ({ isDragging, aimDuration, isReloading }) => {
         backgroundSize: '100% 100%',
         boxShadow: '0 -10px 20px rgba(0,0,0,0.2)',
         overflow: 'visible',
-        paddingBottom: '50px'
+        paddingBottom: isMobile ? '30px' : '50px' // Less padding on mobile
       }}
     >
       {/* Wooden table background */}
@@ -75,88 +75,91 @@ const Gun = ({ isDragging, aimDuration, isReloading }) => {
           opacity: 0.7
         }}></div>
     
+          <div style={{
+            position: 'absolute',
+            top: '15%',
+            left: '10%',
+            width: '12px',
+            height: '20px',
+            borderRadius: '2px 2px 12px 12px',
+            background: 'linear-gradient(to right, #b5a642, #ffd700, #b5a642)',
+            transform: 'rotate(30deg)',
+            boxShadow: '1px 1px 2px rgba(0,0,0,0.3)'
+          }}></div>
         
-        {/* Bullet casings scattered on the table */}
-        <div style={{
-          position: 'absolute',
-          top: '15%',
-          left: '10%',
-          width: '12px',
-          height: '20px',
-          borderRadius: '2px 2px 12px 12px',
-          background: 'linear-gradient(to right, #b5a642, #ffd700, #b5a642)',
-          transform: 'rotate(30deg)',
-          boxShadow: '1px 1px 2px rgba(0,0,0,0.3)'
-        }}></div>
-           <div style={{
-          position: 'absolute',
-          top: '40%',
-          left: '60%',
-          width: '12px',
-          height: '20px',
-          borderRadius: '2px 2px 12px 12px',
-          background: 'linear-gradient(to right, #b5a642, #ffd700, #b5a642)',
-          transform: 'rotate(30deg)',
-          boxShadow: '1px 1px 2px rgba(0,0,0,0.3)'
-        }}></div>
-        <div style={{
-          position: 'absolute',
-          top: '25%',
-          left: '25%',
-          width: '12px',
-          height: '20px',
-          borderRadius: '2px 2px 12px 12px',
-          background: 'linear-gradient(to right, #b5a642, #ffd700, #b5a642)',
-          transform: 'rotate(-15deg)',
-          boxShadow: '1px 1px 2px rgba(0,0,0,0.3)'
-        }}></div>
-        <div style={{
-          position: 'absolute',
-          top: '20%',
-          right: '15%',
-          width: '12px',
-          height: '20px',
-          borderRadius: '2px 2px 12px 12px',
-          background: 'linear-gradient(to right, #b5a642, #ffd700, #b5a642)',
-          transform: 'rotate(65deg)',
-          boxShadow: '1px 1px 2px rgba(0,0,0,0.3)'
-        }}></div>
-        <div style={{
-          position: 'absolute',
-          top: '10%',
-          right: '35%',
-          width: '12px',
-          height: '20px',
-          borderRadius: '2px 2px 12px 12px',
-          background: 'linear-gradient(to right, #b5a642, #ffd700, #b5a642)',
-          transform: 'rotate(120deg)',
-          boxShadow: '1px 1px 2px rgba(0,0,0,0.3)'
-        }}></div>
-        <div style={{
-          position: 'absolute',
-          top: '30%',
-          left: '40%',
-          width: '12px',
-          height: '20px',
-          borderRadius: '2px 2px 12px 12px',
-          background: 'linear-gradient(to right, #b5a642, #ffd700, #b5a642)',
-          transform: 'rotate(-45deg)',
-          boxShadow: '1px 1px 2px rgba(0,0,0,0.3)'
-        }}></div>
+ 
+          <div style={{
+            position: 'absolute',
+            top: '40%',
+            left: '60%',
+            width: '12px',
+            height: '20px',
+            borderRadius: '2px 2px 12px 12px',
+            background: 'linear-gradient(to right, #b5a642, #ffd700, #b5a642)',
+            transform: 'rotate(30deg)',
+            boxShadow: '1px 1px 2px rgba(0,0,0,0.3)'
+          }}></div>
+      
+          <div style={{
+            position: 'absolute',
+            top: '25%',
+            left: '25%',
+            width: '12px',
+            height: '20px',
+            borderRadius: '2px 2px 12px 12px',
+            background: 'linear-gradient(to right, #b5a642, #ffd700, #b5a642)',
+            transform: 'rotate(-15deg)',
+            boxShadow: '1px 1px 2px rgba(0,0,0,0.3)'
+          }}></div>
+       
+            <div style={{
+              position: 'absolute',
+              top: '20%',
+              right: '15%',
+              width: '12px',
+              height: '20px',
+              borderRadius: '2px 2px 12px 12px',
+              background: 'linear-gradient(to right, #b5a642, #ffd700, #b5a642)',
+              transform: 'rotate(65deg)',
+              boxShadow: '1px 1px 2px rgba(0,0,0,0.3)'
+            }}></div>
+            <div style={{
+              position: 'absolute',
+              top: '10%',
+              right: '35%',
+              width: '12px',
+              height: '20px',
+              borderRadius: '2px 2px 12px 12px',
+              background: 'linear-gradient(to right, #b5a642, #ffd700, #b5a642)',
+              transform: 'rotate(120deg)',
+              boxShadow: '1px 1px 2px rgba(0,0,0,0.3)'
+            }}></div>
+            <div style={{
+              position: 'absolute',
+              top: '30%',
+              left: '40%',
+              width: '12px',
+              height: '20px',
+              borderRadius: '2px 2px 12px 12px',
+              background: 'linear-gradient(to right, #b5a642, #ffd700, #b5a642)',
+              transform: 'rotate(-45deg)',
+              boxShadow: '1px 1px 2px rgba(0,0,0,0.3)'
+            }}></div>
+
       </div>
       
       <div 
         className={`gun-image ${isDragging ? 'gun-aiming' : ''} ${aimDuration > 0 ? 'gun-firing' : ''} ${isReloading ? 'gun-reloading' : ''}`}
         style={{
-          width: 'clamp(200px, 50vw, 300px)',
-          height: 'clamp(120px, 30vw, 200px)',
+          width: isMobile ? 'clamp(150px, 40vw, 250px)' : 'clamp(200px, 50vw, 300px)', // Smaller on mobile
+          height: isMobile ? 'clamp(90px, 25vw, 150px)' : 'clamp(120px, 30vw, 200px)', // Smaller on mobile
           backgroundImage: `url(${gunImage})`,
           backgroundSize: 'contain',
           backgroundPosition: 'center bottom',
           backgroundRepeat: 'no-repeat',
           transform: isDragging ? 'scale(1.05)' : 'scale(1)',
           transition: 'transform 0.2s ease',
-          marginBottom: '10px',
+          marginBottom: isMobile ? '5px' : '10px', // Less margin on mobile
           filter: 'drop-shadow(0 5px 10px rgba(0,0,0,0.5))'
         }}
       >
@@ -164,8 +167,8 @@ const Gun = ({ isDragging, aimDuration, isReloading }) => {
           className={`muzzle-flash ${aimDuration > 0 && aimDuration < 300 ? 'active' : ''}`}
           style={{
             position: 'absolute',
-            width: 'clamp(15px, 4vw, 30px)',
-            height: 'clamp(15px, 4vw, 30px)',
+            width: isMobile ? 'clamp(10px, 3vw, 20px)' : 'clamp(15px, 4vw, 30px)', // Smaller on mobile
+            height: isMobile ? 'clamp(10px, 3vw, 20px)' : 'clamp(15px, 4vw, 30px)', // Smaller on mobile
             top: '20%',
             left: '90%',
             background: 'radial-gradient(circle, rgba(255,255,190,1) 0%, rgba(255,165,0,0.8) 50%, rgba(255,0,0,0) 100%)',

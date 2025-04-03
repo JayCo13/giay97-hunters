@@ -31,21 +31,23 @@ const GameContainer = ({
   aimDuration,
   setAimDuration,
   lastShotTime,
-  setLastShotTime
+  setLastShotTime,
+  isMobile = false,
+  isPreview = false // Add isPreview prop to check if we're in preview mode
 }) => {
   // Use custom hooks for bird generation and movement
   useBirdGenerator(birds, setBirds, score, gameContainerRef);
   useBirdMovement(birds, setBirds);
   
-  // Use aiming controls hook
+  // Use aiming controls hook with modified parameters to prevent shooting in preview mode
   useAimingControls(
     gameContainerRef,
     position,
     setPosition,
     isDragging,
     setIsDragging,
-    isReloading,
-    showGameOver,
+    isReloading || isPreview, // Prevent shooting in preview mode
+    showGameOver || isPreview, // Prevent shooting in preview mode
     shootAtPosition
   );
   
@@ -53,7 +55,7 @@ const GameContainer = ({
   useEffect(() => {
     let aimTimer;
     
-    if (isDragging) {
+    if (isDragging && !isPreview) { // Don't track aiming in preview mode
       aimTimer = setInterval(() => {
         setAimDuration(prev => prev + 100);
       }, 100);
@@ -62,12 +64,12 @@ const GameContainer = ({
     }
     
     return () => clearInterval(aimTimer);
-  }, [isDragging, setAimDuration]);
+  }, [isDragging, setAimDuration, isPreview]);
   
   // Shooting logic
   function shootAtPosition() {
-    // Don't allow shooting if game is over
-    if (showGameOver) return;
+    // Don't allow shooting if game is over or in preview mode
+    if (showGameOver || isPreview) return;
     
     // Prevent rapid multiple shots by checking time since last shot
     const currentTime = Date.now();
@@ -125,7 +127,7 @@ const GameContainer = ({
     <>
       {/* Background clouds */}
       {clouds.map(cloud => (
-        <Cloud key={cloud.id} cloud={cloud} />
+        <Cloud key={cloud.id} cloud={cloud} isMobile={isMobile} />
       ))}
       
       <GameHUD 
@@ -135,6 +137,7 @@ const GameContainer = ({
         isReloading={isReloading}
         reload={reload}
         showGameOver={showGameOver}
+        isMobile={isMobile}
       />
       
       {showGameOver && (
@@ -145,16 +148,17 @@ const GameContainer = ({
       {!showGameOver && (
         <>
           {birds.map(bird => (
-            <Bird key={bird.id} bird={bird} />
+            <Bird key={bird.id} bird={bird} isMobile={isMobile}/>
           ))}
           
           <Gun 
             isDragging={isDragging}
             aimDuration={aimDuration}
             isReloading={isReloading}
+            isMobile={isMobile}
           />
           
-          {isDragging && (
+          {isDragging && !isPreview && (
             <div 
               className="aim-dot"
               style={{
